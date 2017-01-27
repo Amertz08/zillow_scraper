@@ -5,14 +5,13 @@ import sys
 
 from flask_script import Manager, Shell
 from flask_migrate import MigrateCommand
-from scrapy.crawler import CrawlerProcess
-from scrapy.utils.project import get_project_settings
 
 from app import create_app, db
 from app.models import HomeListing
-from scraper.spiders.zillow import ZillowScraper
+from app.tasks import crawl_
 
 application = create_app(os.getenv('APP_CONFIG') or 'default')
+
 
 def make_shell_context():
     return dict(
@@ -34,6 +33,7 @@ def resetdb():
     db.drop_all()
     db.create_all()
 
+
 @manager.option('-c', '--city', help='City name', default=None)
 @manager.option('-s', '--state', help='States short name', default=None)
 def crawl(city, state):
@@ -45,11 +45,8 @@ def crawl(city, state):
         sys.exit()
     city = city.lower()
     state = state.lower()
-    print('Crawl: {0}, {1}'.format(city, state))
-    spider = ZillowScraper(city=city, state=state)
-    crawl_process = CrawlerProcess(get_project_settings())
-    crawl_process.crawl(spider)
-    crawl_process.start()  # TODO: this doesn't work
+    print('Crawling: {0}, {1}'.format(city, state))
+    crawl_(city, state)  # TODO: does not work. Also should be crawl_.delay(city, state) when it does.
 
 
 if __name__ == '__main__':

@@ -17,6 +17,9 @@ class Config:
         usr=MYSQL_USER, passwd=MYSQL_PASS, host=MYSQL_HOST, db=MYSQL_DB
     )
 
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULTS_BACKED = 'redis://localhost:6379/0'
+
     @staticmethod
     def init_app(app):
         pass
