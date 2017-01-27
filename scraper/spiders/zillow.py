@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals, print_function
 
 import scrapy
 
@@ -9,6 +9,11 @@ BASE_URL = 'http://zillow.com'
 
 class ZillowScraper(scrapy.Spider):
     name = 'zillow'
+
+    def __init__(self, *args, **kwargs):
+        super(ZillowScraper, self).__init__(*args, **kwargs)
+        self.city = kwargs.get('city')
+        self.state = kwargs.get('state')
 
     def start_requests(self):
         url = BASE_URL
@@ -41,6 +46,6 @@ class ZillowScraper(scrapy.Spider):
                 elif type == 'addressRegion':
                     listing['state'] = entry.xpath('text()').extract_first()
                 elif type == 'postalCode':
-                    listing['zip_code'] = int(entry.xpath('text()').extract_first())
+                    listing['zip_code'] = entry.xpath('text()').extract_first()
             yield listing
 
