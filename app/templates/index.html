@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Test{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <h1>Hello</h1>
+    {% if users %}
+    <ul>
+        {% for user in users %}
+        <ul>
+            <li>First Name: {{ user.first_name }}</li>
+            <li>Last Name: {{ user.last_name }}</li>
+            <li>Email: {{ user.email }}</li>
+        </ul>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>There are no users</p>
+    {% endif %}
+</div>
+{% endblock %}
