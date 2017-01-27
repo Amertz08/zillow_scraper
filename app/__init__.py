@@ -1,10 +1,12 @@
+from __future__ import absolute_import, print_function, unicode_literals
+
 import arrow
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 
-from config import config
+from app.config import config
 
 db = SQLAlchemy()
 migrate = Migrate(app=None, db=db)
@@ -23,7 +25,7 @@ def create_app(config_lvl):
         return arrow.get(date).format('YYYY-MM-DD hh:mm:ss')
 
     # Blueprints
-    from main import main
+    from app.main import main
     app.register_blueprint(main)
 
     return app
