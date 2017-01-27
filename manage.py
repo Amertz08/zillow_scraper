@@ -13,7 +13,6 @@ from app.models import HomeListing
 from scraper.spiders.zillow import ZillowScraper
 
 application = create_app(os.getenv('APP_CONFIG') or 'default')
-crawl_process = CrawlerProcess(get_project_settings())
 
 def make_shell_context():
     return dict(
@@ -48,6 +47,7 @@ def crawl(city, state):
     state = state.lower()
     print('Crawl: {0}, {1}'.format(city, state))
     spider = ZillowScraper(city=city, state=state)
+    crawl_process = CrawlerProcess(get_project_settings())
     crawl_process.crawl(spider)
     crawl_process.start()  # TODO: this doesn't work
 
