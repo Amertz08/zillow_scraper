@@ -17,5 +17,7 @@ def create_app(config_lvl):
     migrate.init_app(app)
 
     # Blueprints
+    from main import main
+    app.register_blueprint(main)
 
     return app

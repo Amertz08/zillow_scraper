@@ -44,7 +44,7 @@ def crawl(city, state):
     print('Crawl: {0}, {1}'.format(city, state))
     spider = ZillowScraper(city=city, state=state)
     crawl_process.crawl(spider)
-    crawl_process.start()
+    crawl_process.start()  # TODO: this doesn't work
 
 
 if __name__ == '__main__':
