@@ -30,6 +30,11 @@ def createdb():
     db.create_all()
 
 
+@manager.command
+def resetdb():
+    db.drop_all()
+    db.create_all()
+
 @manager.option('-c', '--city', help='City name', default=None)
 @manager.option('-s', '--state', help='States short name', default=None)
 def crawl(city, state):
