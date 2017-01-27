@@ -8,7 +8,14 @@
 import scrapy
 
 
-class ScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class HomeListing(scrapy.Item):
+    zid = scrapy.Field()
+    street_address = scrapy.Field()
+    city = scrapy.Field()
+    state = scrapy.Field()
+    zip_code = scrapy.Field()
+    latitude = scrapy.Field()
+    longitude = scrapy.Field()
+    pgapt = scrapy.Field()  # TODO: what does this mean?
+    sgapt = scrapy.Field()  # TODO: what does this mean?
+    link = scrapy.Field()
