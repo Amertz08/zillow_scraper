@@ -3,7 +3,35 @@
 {% block title %}Listings{% endblock %}
 
 {% block page_content %}
-<p>
-    Hello
-</p>
+    <h1>Listings</h1>
+    {% if listings %}
+        <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Zillow ID</th>
+            <th>Entry Date</th>
+            <th>Street Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th>Sale Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for listing in listings %}
+        <tr>
+            <td><a target="_blank" href="{{ listing.link }}">{{ listing.zid }}</a></td>
+            <td>{{ listing.entry_date | datetime }}</td>
+            <td>{{ listing.street_address }}</td>
+            <td>{{ listing.city }}</td>
+            <td>{{ listing.state }}</td>
+            <td>{{ listing.zip_code }}</td>
+            <td>{{ listing.sgapt }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    {% else %}
+        <p>No Listings...GET TO SCRAPING!</p>
+    {% endif %}
 {% endblock %}

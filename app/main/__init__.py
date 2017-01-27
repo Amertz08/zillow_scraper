@@ -15,4 +15,4 @@ def index():
 @main.route('/listings')
 def listings():
     listings = HomeListing.query.all()
-    return render_template('listings.html')
+    return render_template('listings.html', listings=listings)
