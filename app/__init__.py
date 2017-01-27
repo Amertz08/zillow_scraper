@@ -1,3 +1,4 @@
+import arrow
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -15,6 +16,11 @@ def create_app(config_lvl):
     Bootstrap(app)
     db.init_app(app)
     migrate.init_app(app)
+
+    # Filters and Context processors
+    @app.template_filter('datetime')
+    def datetime(date):
+        return arrow.get(date).format('YYYY-MM-DD hh:mm:ss')
 
     # Blueprints
     from main import main
