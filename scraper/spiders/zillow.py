@@ -12,13 +12,19 @@ class ZillowScraper(scrapy.Spider):
 
     def __init__(self, *args, **kwargs):
         super(ZillowScraper, self).__init__(*args, **kwargs)
-        self.city = kwargs.get('city')
-        self.state = kwargs.get('state')
+        city = kwargs.get('city')
+        state = kwargs.get('state')
+        if not city:
+            raise ValueError('city parameter not defined')
+        if not state:
+            raise ValueError('state parameter not defined')
+        self.city = city
+        self.state = state
 
     def start_requests(self):
         url = BASE_URL
-        city = getattr(self, 'city', None)
-        state = getattr(self, 'state', None)
+        city = self.city
+        state = self.state
         if city is not None and state is not None:
             url = url + '/' + city + '-' + state
         yield scrapy.Request(url, self.parse)
