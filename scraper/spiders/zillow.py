@@ -1,6 +1,8 @@
+from __future__ import absolute_import
+
 import scrapy
 
-from ..items import HomeListing
+from scraper.items import HomeListing
 
 BASE_URL = 'http://zillow.com'
 
@@ -22,7 +24,7 @@ class ZillowScraper(scrapy.Spider):
         homes = response.css('ul.photo-cards > li')
         for home in homes:
             listing = HomeListing()
-            listing['link'] = home.css('a.hdp-link::attr(href)').extract_first()
+            listing['link'] = BASE_URL + home.css('a.hdp-link::attr(href)').extract_first()
             article = home.css('article.zsg-photo-card.photo-card')
             listing['latitude'] = int(article.xpath('@data-latitude').extract_first())
             listing['longitude'] = int(article.xpath('@data-longitude').extract_first())
