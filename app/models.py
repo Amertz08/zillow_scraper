@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals, print_function
 
+import arrow
+
 from app import db
 
 
@@ -8,7 +10,7 @@ class HomeListing(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     zid = db.Column(db.Integer)
-    entry_date = db.Column(db.Integer, server_default=db.func.now())
+    entry_date = db.Column(db.Integer, default=arrow.now().timestamp)
     street_address = db.Column(db.String(255), default='', nullable=False)
     city = db.Column(db.String(255), default='', nullable=False)
     state = db.Column(db.String(255), default='', nullable=False)
