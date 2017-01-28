@@ -49,6 +49,14 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     PRODUCTION = True
 
+    MYSQL_USER = 'zillow'
+    MYSQL_PASS = os.getenv('MYSQL_PASS') or '7R1SzZpHWhzl'
+    MYSQL_HOST = 'localhost'
+    MYSQL_DB = 'zillow'
+    # Database info
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{usr}:{passwd}@{host}/{db}'.format(
+        usr=MYSQL_USER, passwd=MYSQL_PASS, host=MYSQL_HOST, db=MYSQL_DB
+    )
 
 config = {
     'development': DevelopmentConfig,
