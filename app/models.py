@@ -1,8 +1,28 @@
 from __future__ import absolute_import, unicode_literals, print_function
 
 import arrow
+from datetime import date, datetime
 
 from app import db
+
+
+def filter_serialization(column):
+    """Returns only values that can be turned into JSON"""
+    if isinstance(column, datetime):
+        return column.strftime('%Y-%m-%d %H:%M:%S')
+    elif isinstance(column, date):
+        return column.strftime('%Y-%m-%d')
+    elif column is None:
+        return ''
+    return column
+
+
+def serial_gen(obj):
+    """Generator to build serialized object"""
+    if not isinstance(obj, db.Model):
+        raise TypeError('Must be a Flask-SQLAlchemy object')
+    for i in obj.__table__.columns:
+        yield i.name, filter_serialization(getattr(obj, i.name))
 
 
 class HomeListing(db.Model):
@@ -20,4 +40,9 @@ class HomeListing(db.Model):
     pgapt = db.Column(db.String(25))
     sgapt = db.Column(db.String(25))
     link = db.Column(db.String(255))
+
+    @property
+    def serialize(self):
+        """Returns all attributes in dict"""
+        return {key: val for key, val in serial_gen(self)}
 
