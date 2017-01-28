@@ -10,3 +10,6 @@ $ mkvirtualenv zillow
 (zillow)$ python manage.py runserver
 # open browser to http://localhost:5000
 ```
+
+## Testing
+:laughing:

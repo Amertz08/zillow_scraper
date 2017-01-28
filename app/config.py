@@ -20,6 +20,10 @@ class Config:
     CELERY_BROKER_URL = 'redis://localhost:6379/0'
     CELERY_RESULTS_BACKED = 'redis://localhost:6379/0'
 
+    # flask_mail
+    MAIL_SERVER = ''
+    MAIL_PORT = 25
+
     @staticmethod
     def init_app(app):
         pass
