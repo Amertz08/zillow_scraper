@@ -9,7 +9,7 @@ from app import create_app, db
 from app.models import HomeListing
 from app.lib import commit
 
-app = create_app(os.getenv('APP_CONFIG') or 'default')
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
 
 class SqlAlchemyPipeline(object):
