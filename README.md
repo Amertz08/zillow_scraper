@@ -24,7 +24,6 @@ Then run the following bash commands to finalize the database setup
 
 ```bash
 (zillow)$ python manage.py creatdb
-(zillow)$ python manage.py db init
 # CHANGE PY_BASE_PATH in migrate-local.sh before running this command
 (zillow)$ bash migrate-local.sh
 (zillow)$ python manage.py runserver
