@@ -5,6 +5,7 @@ import sys
 
 from flask_script import Manager, Shell
 from flask_migrate import MigrateCommand
+import pytest
 
 from app import create_app, db
 from app.models import HomeListing
@@ -23,15 +24,34 @@ manager.add_command('db', MigrateCommand)
 manager.add_command('shell', Shell(make_context=make_shell_context))
 
 
+def input(message):
+    """Remove if building w/ Py3"""
+    return raw_input(message)
+
+
 @manager.command
 def createdb():
-    db.create_all()
+    """Setups db initially"""
+    ans = input('Initialize DB? [y/n]: ').lower()
+    if ans == 'y':
+        db.create_all()
+        print('DB initialized...')
 
 
 @manager.command
 def resetdb():
-    db.drop_all()
-    db.create_all()
+    """Resets db"""
+    ans = input('Reset db? [y/n]: ').lower()
+    if ans == 'y':
+        db.drop_all()
+        db.create_all()
+        print('DB reset...')
+
+
+@manager.command
+def test():
+    """Runs tests :)"""
+    pytest.main()  # TODO: doesn't work
 
 
 @manager.option('-c', '--city', help='City name', default=None)
