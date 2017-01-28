@@ -26,11 +26,8 @@ class TestMain(BaseTest):
         self.db.session.add(listing)
         commit(self.db.session)
         r = self.client.get('/listings')
+        self.assert200(r, 'Listing view does not return 200')
         listing = HomeListing.query.first()
         context_var = self.get_context_variable('listings')
         self.assertEqual(len(context_var), 1, 'There should only be on listing: {}'.format(len(context_var)))
         self.assertEqual(context_var.pop(), listing, 'blah')
-
-
-
-
