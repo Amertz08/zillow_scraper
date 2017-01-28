@@ -45,7 +45,7 @@ class HomeListing(db.Model):
         return self.id == other.id
 
     def __ne__(self, other):
-        return not self.__eq__(self, other)
+        return not self.__eq__(other)
 
     @property
     def serialize(self):
