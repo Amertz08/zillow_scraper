@@ -11,7 +11,7 @@ class Config:
     MYSQL_USER = 'zillow'
     MYSQL_PASS = '7R1SzZpHWhzl'
     MYSQL_HOST = 'localhost'
-    MYSQL_DB = 'zillow_scraper'
+    MYSQL_DB = 'zillow_dev'
     # Database info
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{usr}:{passwd}@{host}/{db}'.format(
         usr=MYSQL_USER, passwd=MYSQL_PASS, host=MYSQL_HOST, db=MYSQL_DB
@@ -35,6 +35,15 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
+
+    MYSQL_USER = 'zillow'
+    MYSQL_PASS = '7R1SzZpHWhzl'
+    MYSQL_HOST = 'localhost'
+    MYSQL_DB = 'zillow_test'
+    # Database info
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{usr}:{passwd}@{host}/{db}'.format(
+        usr=MYSQL_USER, passwd=MYSQL_PASS, host=MYSQL_HOST, db=MYSQL_DB
+    )
 
 
 class ProductionConfig(Config):
