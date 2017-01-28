@@ -41,8 +41,15 @@ class HomeListing(db.Model):
     sgapt = db.Column(db.String(25))
     link = db.Column(db.String(255))
 
+    def __eq__(self, other):
+        return self.id == other.id
+
+    def __ne__(self, other):
+        return not self.__eq__(self, other)
+
     @property
     def serialize(self):
         """Returns all attributes in dict"""
         return {key: val for key, val in serial_gen(self)}
+
 
