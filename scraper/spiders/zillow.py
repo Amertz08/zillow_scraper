@@ -45,7 +45,6 @@ class ZillowScraper(scrapy.Spider):
             listing['zid'] = int(article.xpath('@data-zpid').extract_first())
             listing['pgapt'] = article.xpath('@data-pgapt').extract_first()
             listing['sgapt'] = article.xpath('@data-sgapt').extract_first()
-            listing['list_price'] = 0.00  # TODO: actually scrape
             address_info = article.css('.zsg-photo-card-content > span > span')
             for entry in address_info:
                 type = entry.xpath('@itemprop').extract_first()
@@ -61,10 +60,10 @@ class ZillowScraper(scrapy.Spider):
             request.meta['listing'] = listing
             yield request
 
-            # next_page = response.css('li.zsg-pagination-next a::attr(href)').extract_first()
-            # if next_page is not None:
-            #     next_page = response.urljoin(next_page)
-            #     yield scrapy.Request(next_page, callback=self.parse)
+            next_page = response.css('li.zsg-pagination-next a::attr(href)').extract_first()
+            if next_page is not None:
+                next_page = response.urljoin(next_page)
+                yield scrapy.Request(next_page, callback=self.parse)
 
     def parse_detailed_view(self, response):
         listing = response.meta['listing']
@@ -81,4 +80,7 @@ class ZillowScraper(scrapy.Spider):
             if ans is not None:
                 val = re.search('(\d+\S+)', text).group()
                 listing['sq_feet'] = parse_number(val, 'en_US')
+        price = response.css('div.main-row > span::text').extract_first()
+        if price is not None:
+            listing['list_price'] = parse_number(re.search('(\d+\S+)', price).group(), 'en_US')
         yield listing
