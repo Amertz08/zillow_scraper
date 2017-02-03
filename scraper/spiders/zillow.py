@@ -55,3 +55,10 @@ class ZillowScraper(scrapy.Spider):
                     listing['zip_code'] = entry.xpath('text()').extract_first()
             yield listing
 
+            next_page = response.css('li.zsg-pagination-next a::attr(href)').extract_first()
+            if next_page is not None:
+                next_page = response.urljoin(next_page)
+                yield scrapy.Request(next_page, callback=self.parse)
+
+    def parse_detailed_view(self, response):
+        pass
