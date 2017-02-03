@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Listing - {{ listing.zid }}{% endblock %}
+
+{% block page_content %}
+    <h1>{{ listing.street_address }}
+        <small>{{ listing.city }}, {{ listing.state }} {{ listing.zip_code }}</small>
+    </h1>
+    <div class="col-md-8">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ZID</th>
+            <th>Beds</th>
+            <th>Baths</th>
+            <th>Sq. Feet</th>
+            <th>Current List Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ listing.zid }}</td>
+            <td>{{ listing.beds }}</td>
+            <td>{{ listing.baths }}</td>
+            <td>{{ listing.sq_feet }}</td>
+            <td>{{ listing.list_price | currency }}</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    <div>
+    <table class="table">
+        <thead>
+        <tr>
+            {% for entry in prices %}
+            <th>{{ entry.date | datetime}}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for entry in prices %}
+            <td>{{ entry.price | currency }}</td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

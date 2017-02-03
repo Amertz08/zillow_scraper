@@ -16,6 +16,7 @@
             <th>Zip Code</th>
             <th>List Price</th>
             <th>Sale Status</th>
+            <th>Detailed View</th>
         </tr>
         </thead>
         <tbody>
@@ -29,6 +30,7 @@
             <td>{{ listing.zip_code }}</td>
             <td>{{ listing.list_price | currency }}</td>
             <td>{{ listing.sgapt }}</td>
+            <td><a href="{{ url_for('main.listing_detailed', zid=listing.zid) }}">View</a></td>
         </tr>
         {% endfor %}
         </tbody>

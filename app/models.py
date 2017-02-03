@@ -46,7 +46,7 @@ class HomeListing(db.Model):
     link = db.Column(db.String(255))
 
     def __eq__(self, other):
-        return self.id == other.id
+        return self.zid == other.zid
 
     def __ne__(self, other):
         return not self.__eq__(other)
