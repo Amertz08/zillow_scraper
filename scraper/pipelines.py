@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals, print_function
 
 import os
+import re
 
 from scrapy.exceptions import DropItem
 from sqlalchemy import exc as sqlalchemy_exc
@@ -20,6 +21,8 @@ class SqlAlchemyPipeline(object):
     def process_item(self, item, spider):
         if item['zid'] in self.zid_seen:
             raise DropItem('Duplicate listing found %s' % item['zid'])
+        elif re.search('AuthRequired', item['link']):
+            raise DropItem('Unauthorized listing found %s' % item['zid'])
         else:
             self.zid_seen.add(item['zid'])
             home = HomeListing(**item)
