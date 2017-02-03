@@ -1,6 +1,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import arrow
+from babel.numbers import format_currency
 from celery import Celery
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -29,6 +30,10 @@ def create_app(config_lvl):
     @app.template_filter('datetime')
     def datetime(date):
         return arrow.get(date).format('YYYY-MM-DD hh:mm:ss')
+
+    @app.template_filter('currency')
+    def currency(val):
+        return format_currency(val, 'USD', locale='en_US')
 
     # Blueprints
     from app.main import main

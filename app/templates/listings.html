@@ -14,6 +14,7 @@
             <th>City</th>
             <th>State</th>
             <th>Zip Code</th>
+            <th>List Price</th>
             <th>Sale Status</th>
         </tr>
         </thead>
@@ -26,6 +27,7 @@
             <td>{{ listing.city }}</td>
             <td>{{ listing.state }}</td>
             <td>{{ listing.zip_code }}</td>
+            <td>{{ listing.list_price | currency }}</td>
             <td>{{ listing.sgapt }}</td>
         </tr>
         {% endfor %}

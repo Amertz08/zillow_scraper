@@ -42,6 +42,7 @@ class ZillowScraper(scrapy.Spider):
             listing['zid'] = int(article.xpath('@data-zpid').extract_first())
             listing['pgapt'] = article.xpath('@data-pgapt').extract_first()
             listing['sgapt'] = article.xpath('@data-sgapt').extract_first()
+            listing['list_price'] = 0.00  # TODO: actually scrape
             address_info = article.css('.zsg-photo-card-content > span > span')
             for entry in address_info:
                 type = entry.xpath('@itemprop').extract_first()

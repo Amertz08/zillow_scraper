@@ -35,6 +35,7 @@ class HomeListing(db.Model):
     city = db.Column(db.String(255), default='', nullable=False)
     state = db.Column(db.String(2), default='', nullable=False)
     zip_code = db.Column(db.String(10), default='', nullable=False)
+    list_price = db.Column(db.Float, default=0.00)
     latitude = db.Column(db.Integer)
     longitude = db.Column(db.Integer)
     pgapt = db.Column(db.String(25))

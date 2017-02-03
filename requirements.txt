@@ -2,6 +2,7 @@ alembic==0.8.10
 amqp==2.1.4
 arrow==0.10.0
 attrs==16.3.0
+Babel==2.3.4
 billiard==3.5.0.2
 blinker==1.4
 celery==4.0.2

@@ -14,3 +14,4 @@ class HomeListing(scrapy.Item):
     pgapt = scrapy.Field()  # TODO: what does this mean?
     sgapt = scrapy.Field()  # TODO: what does this mean?
     link = scrapy.Field()
+    list_price = scrapy.Field()
