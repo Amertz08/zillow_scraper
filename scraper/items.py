@@ -15,3 +15,6 @@ class HomeListing(scrapy.Item):
     sgapt = scrapy.Field()  # TODO: what does this mean?
     link = scrapy.Field()
     list_price = scrapy.Field()
+    beds = scrapy.Field()
+    baths = scrapy.Field()
+    sq_feet = scrapy.Field()

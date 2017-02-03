@@ -1,5 +1,8 @@
 from __future__ import absolute_import, unicode_literals, print_function
 
+import re
+
+from babel.numbers import parse_number
 import scrapy
 
 from scraper.items import HomeListing
@@ -54,12 +57,28 @@ class ZillowScraper(scrapy.Spider):
                     listing['state'] = entry.xpath('text()').extract_first()
                 elif type == 'postalCode':
                     listing['zip_code'] = entry.xpath('text()').extract_first()
-            yield listing
+            request = scrapy.Request(listing['link'], self.parse_detailed_view)
+            request.meta['listing'] = listing
+            yield request
 
-            next_page = response.css('li.zsg-pagination-next a::attr(href)').extract_first()
-            if next_page is not None:
-                next_page = response.urljoin(next_page)
-                yield scrapy.Request(next_page, callback=self.parse)
+            # next_page = response.css('li.zsg-pagination-next a::attr(href)').extract_first()
+            # if next_page is not None:
+            #     next_page = response.urljoin(next_page)
+            #     yield scrapy.Request(next_page, callback=self.parse)
 
     def parse_detailed_view(self, response):
-        pass
+        listing = response.meta['listing']
+        stats = response.css('span.addr_bbs::text')
+        for stat in stats:
+            text = stat.extract()
+            ans = re.search('bed', text)
+            if ans is not None:
+                listing['beds'] = float(re.search('(\d\S*)', text).group())
+            ans = re.search('bath', text)
+            if ans is not None:
+                listing['baths'] = float(re.search('(\d\S*)', text).group())
+            ans = re.search('sqft', text)
+            if ans is not None:
+                val = re.search('(\d+\S+)', text).group()
+                listing['sq_feet'] = parse_number(val, 'en_US')
+        yield listing
