@@ -14,7 +14,9 @@ def index():
 
 @main.route('/listings')
 def listings_view():
-    lists = list(set(HomeListing.query.all()[::-1]))
+    lists = list(set(HomeListing.query.order_by(
+        HomeListing.entry_date.desc()
+    ).all()))
     return render_template('listings.html', listings=lists)
 
 
